@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, PrimaryColumn, OneToOne } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, PrimaryColumn, OneToOne, JoinColumn } from 'typeorm';
 import { UserAccountEntity } from './user.account';
 import { type } from 'os';
 
@@ -21,7 +21,4 @@ export class UserEntity {
 
   @Column({ default: true })
   isActive: boolean;
-
-  @OneToOne(type => UserAccountEntity, account => account.id)
-  userAccountId: UserAccountEntity
 }
