@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, Logger } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
@@ -6,7 +6,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import {UserAccountEntity, UserEntity} from './entities';
 import { AuthModule } from './auth/auth.module';
-
 
 let dbModule = TypeOrmModule.forRoot({
   type: 'mysql',
@@ -22,6 +21,6 @@ let dbModule = TypeOrmModule.forRoot({
 @Module({
   imports: [dbModule, UsersModule, AuthModule],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, Logger],
 })
 export class AppModule {}

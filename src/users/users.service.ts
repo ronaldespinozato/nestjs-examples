@@ -1,18 +1,16 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { User, AccountType } from './../models';
-import { UserEntity, UserAccountEntity } from './../entities';
-import { AuthService } from 'src/auth/auth.service';
+import { User } from './../models';
+import { UserEntity, } from './../entities';
 import { v4 as uuid } from 'uuid';
 
 @Injectable()
 export class UsersService {
+    private logger = new Logger(UsersService.name);
     constructor(
         @InjectRepository(UserEntity)
-        private usersRepository: Repository<UserEntity>,
-        @InjectRepository(UserAccountEntity)
-        private userAccountRepository: Repository<UserAccountEntity>
+        private usersRepository: Repository<UserEntity>
     ) {}
 
     getUserById(id: string): Promise<UserEntity>  {
@@ -25,7 +23,8 @@ export class UsersService {
 
     async createUser(user: User): Promise<User> {
         //add validation for user input        
-        
+        this.logger.log(`A new user will be created.`);
+
         let userEntity = new UserEntity();
         userEntity.id = uuid().toString().toUpperCase();
         userEntity.firstName = user.firstName;
@@ -34,15 +33,9 @@ export class UsersService {
         userEntity.phoneNumber = user.phoneNumber;
         userEntity.isActive = false;
 
-        userEntity = await this.usersRepository.save(userEntity)
-
-        const userAccountRandom =  AuthService.getRandomUserAccount();
-        userAccountRandom.type = AccountType.DEFAULT_ACCOUNT;
-        userAccountRandom.user = userEntity;
-
-
-
-        await this.userAccountRepository.save(userAccountRandom);
+        userEntity = await this.usersRepository.save(userEntity);
+        
+        this.logger.log(`A new user with id ${userEntity.id} was created.`);
 
         return userEntity;
     }

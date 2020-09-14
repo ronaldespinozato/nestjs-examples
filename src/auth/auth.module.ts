@@ -2,14 +2,14 @@ import { Module } from '@nestjs/common';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 
-import { UserAccountEntity } from 'src/entities';
+import { UserAccountEntity, UserEntity } from 'src/entities';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './constants';
 
 let entityModelsModule = TypeOrmModule.forFeature([
-  UserAccountEntity
+  UserAccountEntity, UserEntity
 ]);
 
 let jwtModule = JwtModule.register({

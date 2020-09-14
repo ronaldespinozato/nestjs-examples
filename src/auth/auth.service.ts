@@ -1,7 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { UserAccountEntity } from './../entities';
+import { UserAccountEntity, UserEntity } from './../entities';
 import { v4 as uuid } from 'uuid';
 import * as bcrypt from 'bcrypt';
 import { Account } from 'src/models/account.model';
@@ -10,9 +10,12 @@ import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
+    private readonly logger = new Logger(AuthService.name);
     constructor(
         @InjectRepository(UserAccountEntity)
         private accountRepository: Repository<UserAccountEntity>,
+        @InjectRepository(UserEntity)
+        private userRepository: Repository<UserEntity>,
         private jwtService: JwtService
     ) {}
 
@@ -30,7 +33,14 @@ export class AuthService {
     }
 
     async createAccount(account: Account): Promise<UserAccountEntity> {
-        
+        const user = await this.userRepository.findOne({id: account.userId})
+        if(!user) {
+            this.logger.error(`The user with id ${account.userId} not found in the data store.`);
+            throw new NotFoundException(`The user with id ${account.userId} not found.`);
+        }
+
+        // const userAccount = await this.userRepository.findOne({id: });
+
         const passwordPlainText = account.password;
 
         //add validation rules for user and password.
