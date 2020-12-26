@@ -1,6 +1,7 @@
 import { Controller, Post, Body, Put, Inject } from '@nestjs/common';
 import { Account } from './../models/account.model';
 import { AuthService } from './../auth/auth.service';
+import { UserAccountEntity } from 'src/entities';
 
 @Controller('auth')
 export class AuthController {
@@ -9,7 +10,12 @@ export class AuthController {
 
     @Post("/accounts")
     async createAccount(@Body() account: Account): Promise<any> {
-        return this.authService.createAccount(account)
+        let userAccount = await this.authService.createAccount(account)
+        return {
+            id : userAccount.id,
+            userName: userAccount.userName,
+            activated: userAccount.isActive
+        };
     }
 
     @Post("/login")

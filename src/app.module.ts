@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import {UserAccountEntity, UserEntity} from './entities';
 import { AuthModule } from './auth/auth.module';
+// import {environment} from './environment/';
 
 let dbModule = TypeOrmModule.forRoot({
   type: 'mysql',
@@ -16,6 +17,7 @@ let dbModule = TypeOrmModule.forRoot({
   database: 'food_db',
   entities: [UserAccountEntity, UserEntity],
   synchronize: true,
+  // logging: true
 })
 
 @Module({

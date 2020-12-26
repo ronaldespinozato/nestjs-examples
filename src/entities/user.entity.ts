@@ -1,9 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn, PrimaryColumn, OneToOne, JoinColumn } from 'typeorm';
-import { UserAccountEntity } from './user.account';
-import { type } from 'os';
+import { Entity, Column, PrimaryColumn } from 'typeorm';
 
-@Entity({name: "user"})
-export class UserEntity {  
+@Entity({ name: "user" })
+export class UserEntity {
   @PrimaryColumn()
   id: string;
 
@@ -19,6 +17,6 @@ export class UserEntity {
   @Column()
   phoneNumber: string;
 
-  @Column({ default: true })
+  @Column({ default: false })
   isActive: boolean;
 }
