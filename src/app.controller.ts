@@ -1,6 +1,9 @@
 import { Controller, Get, Logger, LoggerService, Inject, BadRequestException } from '@nestjs/common';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AppService } from './app.service';
 
+@ApiBearerAuth()
+@ApiTags('healthy')
 @Controller()
 export class AppController {  
   logger = new Logger(AppController.name);
@@ -9,7 +12,8 @@ export class AppController {
 
   @Get()
   getHello(): string {
-    this.logger.error("Error on get Hello", new BadRequestException().stack);
+    this.logger.log("############### Testing log messages ###############")
+    this.logger.error("Error on get Hello", new BadRequestException("Exception test healthy check").stack);
     this.logger.warn("Warning :)");
     this.logger.debug("Debug :)");
     this.logger.log("Info :_");
