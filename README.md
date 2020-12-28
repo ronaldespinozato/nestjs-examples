@@ -1,7 +1,9 @@
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
 </p>
+
 This project was build to test the [NestJs framework](https://docs.nestjs.com/), for that some endpoints were created.
+
 ## What is using in this project?
 - Create modules and use them to create endpoints
 - Use Swagger module to display swagger documentation
