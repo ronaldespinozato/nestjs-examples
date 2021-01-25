@@ -1,0 +1,13 @@
+{
+    "environment": "production",
+    "database": {
+        "hostname": "localhost",
+        "port": 3306,
+        "name": "food_db",
+        "username": "root",
+        "password": "control123!"
+    },
+    "log": {
+        "level": "info"
+    }
+}

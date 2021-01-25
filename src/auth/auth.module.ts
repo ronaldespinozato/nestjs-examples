@@ -5,6 +5,7 @@ import { AuthService } from './auth.service';
 import { UserAccountEntity, UserEntity } from 'src/entities';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
+import { JwtStrategy } from './strategies/jwt.strategy';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './constants';
 
@@ -20,7 +21,7 @@ let jwtModule = JwtModule.register({
 @Module({
   imports: [entityModelsModule, jwtModule], // We need to import the entities in the providers[]
   controllers: [AuthController],
-  providers: [AuthService],
+  providers: [AuthService, JwtStrategy],
   exports: [TypeOrmModule] // It helps to use the repository outside of this module
 })
 export class AuthModule {}

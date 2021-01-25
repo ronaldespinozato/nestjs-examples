@@ -41,6 +41,7 @@ export class AuthService {
         const userId = userAccount.userId;
         let payload = {
             sub: userId,
+            username: account.userName,
             type: userAccount.type
         };
 
